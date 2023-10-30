@@ -1,18 +1,27 @@
 name: publish
-on: [push]
+
+on:
+  push:
+    branches:
+      - main # Adjust the branch as needed
+
 jobs:
-publish-hello-docker-image:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v2
-- name: Login to GitHub Container Registry
-uses: docker/login-action@v1
-with:
-registry: ghcr.io
-username: rahulvk007
-password: ${{ secrets.KEY }}
-- name: Build the hello-docker Docker image
-run: |
-       docker build . --tag ghcr.io/rahulvk007/hello-docker-gcr:latest
-       docker run ghcr.io/rahulvk007/hello-docker-gcr:latest
-       docker push ghcr.io/rahulvk007/hello-docker-gcr:latest
+  publish-hello-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: rahulvk007
+          password: ${{ secrets.KEY }}
+
+      - name: Build the hello-docker Docker image
+        run: docker build . -t ghcr.io/rahulvk007/hello-docker-gcr:latest
+
+      - name: Push the Docker image to GitHub Container Registry
+        run: docker push ghcr.io/rahulvk007/hello-docker-gcr:latest
