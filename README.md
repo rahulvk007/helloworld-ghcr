@@ -1,1 +1,1 @@
-# helloworld-ghcr
+*Learning GHCR and Actions by Creating a Simple Docker Image with Github Actions and Pushing to GHCR*
